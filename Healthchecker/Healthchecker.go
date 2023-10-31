@@ -15,16 +15,17 @@ func NewHealthChecker(services []*Service.Service) *HealthChecker {
 func (hc *HealthChecker) Check() {
 	for _, service := range hc.Services {
 		err := service.Alive()
+
 		if err != nil {
 			if err == service.ErrServiceNotFound {
 				continue
 			}
 
-			if service.ConsecutiveFail >= service.FailureThreshold {
+			if service.FailCounter >= service.FailureThreshold {
 				service.Restart()
 			}
 		} else {
-			service.ConsecutiveFail = 0
+			service.FailCounter = 0
 		}
 	}
 }
