@@ -10,7 +10,7 @@ var ErrServiceNotFound = errors.New("Service not found")
 type Service struct {
 	Name             string
 	FailureThreshold int
-	consecutiveFail  int
+	ConsecutiveFail  int
 }
 
 func NewService(name string, failureThreshold int) *Service {
@@ -21,11 +21,11 @@ func NewService(name string, failureThreshold int) *Service {
 }
 
 func (s *Service) Alive() error {
-	if s.consecutiveFail < s.FailureThreshold {
-		s.consecutiveFail++
+	if s.ConsecutiveFail < s.FailureThreshold {
+		s.ConsecutiveFail++
 		return errors.New("Service is not operational")
 	}
-	s.consecutiveFail = 0
+	s.ConsecutiveFail = 0
 	return nil
 }
 

@@ -1,10 +1,14 @@
 package Healthchecker
 
+import (
+	"task1.go/Service"
+)
+
 type HealthChecker struct {
-	Services []*service.Service
+	Services []*Service.Service
 }
 
-func NewHealthChecker(services []*service.Service) *HealthChecker {
+func NewHealthChecker(services []*Service.Service) *HealthChecker {
 	return &HealthChecker{Services: services}
 }
 
@@ -16,11 +20,11 @@ func (hc *HealthChecker) Check() {
 				continue
 			}
 
-			if service.consecutiveFail >= service.FailureThreshold {
+			if service.ConsecutiveFail >= service.FailureThreshold {
 				service.Restart()
 			}
 		} else {
-			service.consecutiveFail = 0
+			service.ConsecutiveFail = 0
 		}
 	}
 }
